@@ -189,7 +189,7 @@ The units work out too: LSB ÷ (LSB per °/s) = °/s.
 
 No sensor is perfect. Even when the MPU-6050 is sitting completely still on a desk, it'll say something like "you're spinning at 0.8 °/s". That fake reading is called the **error** (or **bias**).
 
-That doesn't sound like much, but remember we're adding up the rate forever. 0.8 °/s for one minute is 48 degrees of tilt that never happened.
+That doesn't sound like much, but remember we're adding up the rate continuously. 0.8 °/s for one minute is 48 degrees of tilt that never happened.
 
 So right after startup we:
 
