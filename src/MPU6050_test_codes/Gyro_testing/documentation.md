@@ -127,10 +127,13 @@ It's also the *correct* way to do it. If we read each register one at a time, th
 The Gyro gives us a 16-byte number, but in 2 separate 8-bit bytes, so we have to recombine them to get the actual raw gyro data.
 
 Example:
+
 raw = 12, 000 LSB 
+
 binary = 00010111 01110000
 
 High_byte = 00010111
+
 Low_byte = 01110000
 
 We would have to combine the high and low bye in order to get our actual raw gyro data, which we can do:
