@@ -1,6 +1,6 @@
 # Gyro Testing: Finding the Plane's Angle with an MPU-6050
 
-This program reads the gyroscope on an MPU-6050, figures out how far the sensor has tilted and turned, and prints the angles to the Serial Monitor. That's it. No accelerometer, no temperature, just the gyro.
+This program reads the gyroscope on an MPU-6050, figures out how far the sensor has tilted and turned, and prints the angles to the Serial Monitor. 
 
 The output looks like this:
 
@@ -24,6 +24,9 @@ Think about a car. The speedometer says 60 km/h, but it has no idea where you ar
 
 The gyro works the same way. It tells us something like "you're rotating at 30 degrees per second". To get the actual angle, we keep adding up (speed × time) over and over, thousands of times a second. In math this is called **integrating**, and that's the whole job of this program.
 
+For students that have taken or are taking calc, it's the opposite of a derivative, so if dx/dt = 3 (m/s), then taking the integral of that would give you x(t) = 3t this position x as a function of t.
+
+
 ---
 
 ## 2. Roll, pitch and yaw
@@ -37,6 +40,7 @@ The MPU-6050 measures spin around 3 axes. With the board sitting flat and the X 
 | Z | **Yaw** | Nose turns left or right (like shaking your head "no") |
 
 If the board is mounted a different way on the plane, these names get swapped around, so check which way the arrows on the board point.
+
 
 ---
 
@@ -63,7 +67,7 @@ SCL and SDA are the two wires for **I2C**, which is how the Arduino talks to the
 4. **Calibrate** (`calculate_IMU_error()`). The sensor has to sit perfectly still for about 200 ms here.
 5. Set all the angles to 0. Whatever position the sensor is in right now counts as "zero".
 
-**Forever after that (`loop()`):**
+**Indefinitely after that (`loop()`):**
 
 1. Wait until 1 millisecond has passed.
 2. Read the gyro (`readGyro()`).
@@ -120,6 +124,20 @@ It's also the *correct* way to do it. If we read each register one at a time, th
 
 ### Gluing the two bytes back together
 
+The Gyro gives us a 16-byte number, but in 2 separate 8-bit bytes, so we have to recombine them to get the actual raw gyro data.
+
+Example:
+
+raw = 12, 000 LSB 
+
+binary = 00010111 01110000
+
+High_byte = 00010111
+
+Low_byte = 01110000
+
+We would have to combine the high and low bye in order to get our actual raw gyro data, which we can do:
+
 ```cpp
 int16_t rawX = (Wire.read() << 8) | Wire.read();
 ```
@@ -171,7 +189,7 @@ The units work out too: LSB ÷ (LSB per °/s) = °/s.
 
 No sensor is perfect. Even when the MPU-6050 is sitting completely still on a desk, it'll say something like "you're spinning at 0.8 °/s". That fake reading is called the **error** (or **bias**).
 
-That doesn't sound like much, but remember we're adding up the rate forever. 0.8 °/s for one minute is 48 degrees of tilt that never happened.
+That doesn't sound like much, but remember we're adding up the rate continuously. 0.8 °/s for one minute is 48 degrees of tilt that never happened.
 
 So right after startup we:
 
