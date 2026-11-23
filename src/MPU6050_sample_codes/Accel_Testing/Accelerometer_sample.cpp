@@ -3,7 +3,8 @@
 #include <math.h>
 
 
-//Accelerometer code, currently unfinished.
+//Accelerometer code: reads the MPU-6050 accelerometer and uses gravity to calculate roll and pitch.
+//See documentation.md in this folder for the full explanation.
 
 
 const int MPU = 0x68; // I2C address of MPU-6050
@@ -16,7 +17,6 @@ const int calibration_steps = 200; // 200 samples, 1ms apart for a total of 200 
 float accelX, accelY, accelZ; // Acceleration for X, Y, Z axis (g)
 float accelAngleX, accelAngleY; //Accelerometer roll and pitch angles, respectively
 float accelErrorX, accelErrorY, accelErrorZ; // Error variables for accelerometer data (used to calibrate the sensor).
-float elapsedTime; // Time between samples (seconds)
 unsigned long currentTime, previousTime; // Timestamps in microseconds
 unsigned long lastPrintTime; // Timestamp of last Serial print in milliseconds
 int c = 0; // Sample counter for calculate_IMU_error()
@@ -117,7 +117,7 @@ int16_t Accel_raw_X = Wire.read() << 8 | Wire.read();
 int16_t Accel_raw_Y = Wire.read() << 8 | Wire.read();
 int16_t Accel_raw_Z = Wire.read() << 8 | Wire.read();
 
-//Divide by the LSB for our configuration (4096 for +/- 9g)
+//Divide by the LSB for our configuration (4096 for +/- 8g)
 accelX = Accel_raw_X / ACCELEROMETER_SENSITIVITY; 
 accelY = Accel_raw_Y / ACCELEROMETER_SENSITIVITY;
 accelZ = Accel_raw_Z / ACCELEROMETER_SENSITIVITY;

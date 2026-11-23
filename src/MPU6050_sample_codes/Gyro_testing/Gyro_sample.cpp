@@ -18,7 +18,7 @@ float gyroX, gyroY, gyroZ; // Angular rates for X, Y, Z axis (degrees/second)
 float prevGyroX, prevGyroY, prevGyroZ; // Angular rates from the previous sample, used by the trapezoidal rule
 float angleX, angleY, angleZ; // Roll, pitch, yaw (degrees), calculated through integrating the gyro data
 float gyroErrorX, gyroErrorY, gyroErrorZ; // Error variables for gyro data (used to calibrate the sensor).
-float elapsedTime; // Time between samples (seconds)
+float dt; // Time between samples (seconds)
 unsigned long currentTime, previousTime; // Timestamps in microseconds
 unsigned long lastPrintTime; // Timestamp of last Serial print in milliseconds
 int c = 0; // Sample counter for calculate_IMU_error()
@@ -85,7 +85,7 @@ void loop(){
         return; // Wait until 1 ms has passed since the last sample
     }
 
-    elapsedTime = (currentTime - previousTime) / 1000000.0; // Measured dt in seconds
+    dt = (currentTime - previousTime) / 1000000.0; // Measured dt in seconds
     previousTime = currentTime;
 
     readGyro();
@@ -96,9 +96,9 @@ void loop(){
     gyroZ -= gyroErrorZ;
 
     // Trapezoidal rule: angle += (previous rate + current rate) / 2 * dt
-    angleX += (prevGyroX + gyroX) * 0.5 * elapsedTime; // Roll
-    angleY += (prevGyroY + gyroY) * 0.5 * elapsedTime; // Pitch
-    angleZ += (prevGyroZ + gyroZ) * 0.5 * elapsedTime; // Yaw
+    angleX += (prevGyroX + gyroX) * 0.5 * dt; // Roll
+    angleY += (prevGyroY + gyroY) * 0.5 * dt; // Pitch
+    angleZ += (prevGyroZ + gyroZ) * 0.5 * dt; // Yaw
 
     prevGyroX = gyroX;
     prevGyroY = gyroY;
