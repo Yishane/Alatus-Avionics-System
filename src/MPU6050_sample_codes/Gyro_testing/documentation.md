@@ -24,7 +24,7 @@ Think about a car. The speedometer says 60 km/h, but it has no idea where you ar
 
 The gyro works the same way. It tells us something like "you're rotating at 30 degrees per second". To get the actual angle, we keep adding up (speed × time) over and over, thousands of times a second. In math this is called **integrating**, and that's the whole job of this program.
 
-For students that have taken or are taking calc, it's the opposite of a derivative, so if dx/dt = 3 (m/s), then taking the integral of that would give you x(t) = 3t this position x as a function of t.
+For students that have taken or are taking calc, it's the opposite of a derivative, so if dx/dt = 3 (m/s), then taking the integral of that would give you x(t) = 3t this position x as a function of t. Take x(t) = 3t, and you can see that the units work out 3(m/s) multiplied by time t (s), gives us a position in meters. In our case, we're applying it to an angle. 
 
 
 ---
