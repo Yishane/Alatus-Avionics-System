@@ -94,14 +94,14 @@ void loop(){
 
     if(millis() - lastPrintTime >= PRINT_PERIOD_MS){
 
-        Serial.println("Roll:  ");
+        lastPrintTime = millis();
+
+        Serial.print("Roll:  ");
         Serial.print(accelAngleX);
         Serial.print("   |  Pitch:  ");
-        Serial.print(accelAngleY);
+        Serial.println(accelAngleY);
+
     }
-
-    lastPrintTime = millis();
-
 }
 
 void readAccelerometer(){

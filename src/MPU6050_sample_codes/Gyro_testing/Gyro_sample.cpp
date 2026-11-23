@@ -107,12 +107,12 @@ void loop(){
     if (millis() - lastPrintTime >= PRINT_PERIOD_MS){
         lastPrintTime = millis();
 
-        Serial.println("Roll: ");
+        Serial.print("Roll: ");
         Serial.print(angleX);
         Serial.print("   |Pitch: ");
         Serial.print(angleY);
         Serial.print("   |Yaw: ");
-        Serial.print(angleZ);
+        Serial.println(angleZ);
     }
 
 }
