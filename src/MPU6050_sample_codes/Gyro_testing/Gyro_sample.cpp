@@ -106,15 +106,13 @@ void loop(){
 
     if (millis() - lastPrintTime >= PRINT_PERIOD_MS){
         lastPrintTime = millis();
-        // Serial.print(value): sends text or a number to the Serial Monitor without starting a new line.
-        // Floats are printed with 2 decimal places by default.
-        // Serial.println(value): same as Serial.print, but ends the line so the next print starts on a new line.
-        Serial.print("Roll: ");
+
+        Serial.println("Roll: ");
         Serial.print(angleX);
-        Serial.print("  Pitch: ");
+        Serial.print("   |Pitch: ");
         Serial.print(angleY);
-        Serial.print("  Yaw: ");
-        Serial.println(angleZ);
+        Serial.print("   |Yaw: ");
+        Serial.print(angleZ);
     }
 
 }
@@ -132,7 +130,7 @@ void readGyro(){
 
     // Wire.read(): takes the next byte out of the buffer filled by Wire.requestFrom(), in the order received.
     // Each axis is a 16-bit two's complement value, high byte first
-    int16_t rawX = (Wire.read() << 8) | Wire.read();
+    int16_t rawX = (Wire.read() << 8) | Wire.read(); // read, shift those values 8 bits to the left, then read again to get a 16 bit value.
     int16_t rawY = (Wire.read() << 8) | Wire.read();
     int16_t rawZ = (Wire.read() << 8) | Wire.read();
 
